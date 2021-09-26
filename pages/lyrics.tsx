@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import type { NextPage } from "next";
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
 
 interface LyricsState {
   lyrics: any;
@@ -63,10 +60,6 @@ export default function Lyrics() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(event.target.value);
   };
-
-  // useEffect(() => {
-  //   setLyrics(getLyrics());
-  // }, []);
 
   return (
     <div>

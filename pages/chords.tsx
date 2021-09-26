@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { NextPage } from "next";
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import TonePlayer from "../components/TonePlayer";
 
 interface ChordsState {
   // chords: Array<string>;
@@ -78,6 +76,7 @@ export default function Chords() {
       <h1>Generate Chords</h1>
       <button onClick={() => randomizeChords()}>Randomize chords</button>
       <div className="chord-holder">{chords}</div>
+      <TonePlayer tones={chords} />
     </div>
   );
 }
