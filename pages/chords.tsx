@@ -71,11 +71,22 @@ export default function Chords() {
     return chordsToAdd;
   };
 
+  const playChords = () => {};
+
   return (
     <div className="generate-chords">
       <h1>Generate Chords</h1>
+      <button onClick={() => playChords()}>Play next chord</button>
       <button onClick={() => randomizeChords()}>Randomize chords</button>
-      <div className="chord-holder">{chords}</div>
+      <div className="chord-holder">
+        {chords
+          ? chords.map((oneChord: string, keyId: number) => (
+              <span key={keyId}>{oneChord}</span>
+            ))
+          : null}
+      </div>
+
+      <p>{chords}</p>
       <TonePlayer tones={chords} />
     </div>
   );

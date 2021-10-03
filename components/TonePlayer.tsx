@@ -5,21 +5,67 @@ interface tonePlayerProps {
   tones: any;
 }
 
-export default function TonePlayer(tones: any) {
-  useEffect(() => {
-    //create a synth and connect it to the main output (your speakers)
+export default function TonePlayer(props: any) {
+  const createChordFromNote = (note: string) => {
+    console.log(`note ${note}`);
+    let chord: Array<string> = [""];
+    switch (note) {
+      case "A":
+        chord = ["A", "C#", "E"];
+        break;
+      case "B":
+        chord = ["B", "D#", "F#"];
+        break;
+      case "C":
+        chord = ["C", "E", "G"];
+        break;
+      case "D":
+        chord = ["D", "F#", "A"];
+        break;
+      case "E":
+        chord = ["E", "G#", "B"];
+        break;
+      case "F":
+        chord = ["F", "A", "C"];
+        break;
+      case "G":
+        chord = ["G", "D", "B"];
+        break;
+    }
+    console.log("chord " + chord);
+    return chord;
+  };
+
+  const triggerPlayerForSingleChord = (chordNotes: Array<string>) => {
     const synth = new Tone.PolySynth(Tone.Synth).toDestination();
     const now = Tone.now();
-    if (tones.tones) {
-      console.log(tones);
-      console.log(tones.tones[0]);
-      let timeIncrease = 0.5;
-      for (var i = 0; i < 2; i++) {
-        console.log(tones.tones[i]);
-        synth.triggerAttackRelease(`${tones.tones[i]}4`, timeIncrease);
-        timeIncrease += 0.5;
-        // synth.triggerAttackRelease("C4", "4n");
+    for (var i = 0; i < 3; i++) {
+      synth.triggerAttackRelease(`${chordNotes[i]}4`, 0.5);
+    }
+  };
+
+  const triggerPlayerForAllChords = (chordNotes: Array<string>) => {
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const now = Tone.now();
+    for (var c = 0; c < props.tones.length; c++) {
+      console.log(c);
+      for (var i = 0; i < 3; i++) {
+        synth.triggerAttackRelease(`${chordNotes[i]}4`, 0.5);
       }
+    }
+  };
+
+  useEffect(() => {
+    if (props.tones) {
+      // ATTEMPT at all chords #1
+      // for (var i = 0; i < props.tones.length; i++) {
+      //   triggerPlayerForSingleChord(createChordFromNote(props.tones[i]));
+      // }
+
+      /// ATTEMPT at all chords #2
+      // triggerPlayerForAllChords(createChordFromNote(props.tones[0]));
+
+      triggerPlayerForSingleChord(createChordFromNote(props.tones[0]));
     }
   });
 
