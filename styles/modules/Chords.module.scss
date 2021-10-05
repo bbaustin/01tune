@@ -1,0 +1,41 @@
+@import "../colors.scss";
+
+.generateChords {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+.chordHolder {
+  margin-top: 15px;
+  overflow-wrap: anywhere;
+}
+.chordBox {
+  width: 100px;
+  height: 50px;
+  display: inline-block;
+  padding: 25px 0;
+  border-radius: 25px;
+}
+span.A {
+  background: $hotPink;
+}
+
+.chordBox.B {
+  background: $hotCyan;
+}
+.chordBox.C {
+  background: $hotYellow;
+}
+.chordBox.D {
+  background: $hotPurple;
+}
+.chordBox.E {
+  background: $hotGreen;
+}
+.chordBox.F {
+  background: $softPurple;
+}
+.chordBox.G {
+  background: $darkBlue;
+}

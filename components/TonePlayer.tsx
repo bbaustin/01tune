@@ -36,7 +36,7 @@ export default function TonePlayer(props: any) {
     return chord;
   };
 
-  const triggerPlayerForSingleChord = (chordNotes: Array<string>) => {
+  const triggerPlayerForSingleChord = (chordNotes: any) => {
     const synth = new Tone.PolySynth(Tone.Synth).toDestination();
     const now = Tone.now();
     for (var i = 0; i < 3; i++) {
@@ -44,7 +44,7 @@ export default function TonePlayer(props: any) {
     }
   };
 
-  const triggerPlayerForAllChords = (chordNotes: Array<string>) => {
+  const triggerPlayerForAllChords = (chordNotes: any) => {
     const synth = new Tone.PolySynth(Tone.Synth).toDestination();
     const now = Tone.now();
     for (var c = 0; c < props.tones.length; c++) {
@@ -61,13 +61,11 @@ export default function TonePlayer(props: any) {
       // for (var i = 0; i < props.tones.length; i++) {
       //   triggerPlayerForSingleChord(createChordFromNote(props.tones[i]));
       // }
-
       /// ATTEMPT at all chords #2
       // triggerPlayerForAllChords(createChordFromNote(props.tones[0]));
-
-      triggerPlayerForSingleChord(createChordFromNote(props.tones[0]));
+      // triggerPlayerForSingleChord(createChordFromNote(props.tones[0]));
     }
   });
 
-  return <h6>this is TonePlayer</h6>;
+  return null;
 }
