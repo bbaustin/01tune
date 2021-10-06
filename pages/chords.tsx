@@ -107,12 +107,29 @@ export default function Chords() {
             ))
           : null} */}
           {chords
-            ? chords.map((oneChord) => (
-                <div className={`${chordsStyles.chordBox} ${oneChord}`}>
+            ? chords.map((oneChord, index: number) => (
+                <div
+                  className={`${chordsStyles.chordBox} ${oneChord}`}
+                  key={index}
+                >
                   <span className={oneChord}>{oneChord}</span>
                 </div>
               ))
             : null}
+          <style global jsx>
+            {`
+              .A {
+                background: $hotpink;
+              }
+              .oneChord {
+                background: blue;
+                color: red;
+              }
+              span {
+                color: pink;
+              }
+            `}
+          </style>
         </div>
 
         {/* <p>{chords}</p> */}

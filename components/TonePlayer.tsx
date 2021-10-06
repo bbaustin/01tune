@@ -63,7 +63,7 @@ export default function TonePlayer(props: any) {
       // }
       /// ATTEMPT at all chords #2
       // triggerPlayerForAllChords(createChordFromNote(props.tones[0]));
-      // triggerPlayerForSingleChord(createChordFromNote(props.tones[0]));
+      triggerPlayerForSingleChord(createChordFromNote(props.tones[0]));
     }
   });
 
