@@ -8,16 +8,34 @@ interface ChordsState {
   chords: any;
 }
 
+// // highlighter colors
+const softPink = "#ff81d3";
+const hotPink = "#ff68ca";
+const softPurple = "#b6b0ff";
+const hotPurple = "#c180ff";
+const hotCyan = "#14e7ff";
+const softCyan = "#92dce5";
+const hotAqua = "#39d4bb";
+const softAqua = "#399999";
+const hotGreen = "#48ff14";
+const softGreen = "#2fb863";
+const hotYellow = "#eeff14";
+const hotOrange = "#dfae45";
+const softOrange = "#e9c194";
+const hotRed = "#dd7474";
+const softRed = "#e99999";
+
 export default function Chords() {
   const [chords, setChords] = useState();
   const chordKey: Array<any> = [
-    { chord: "A", color: "red" },
-    { chord: "B", color: "blue" },
-    { chord: "C", color: "orange" },
-    { chord: "D", color: "purple" },
-    { chord: "E", color: "yellow" },
-    { chord: "F", color: "green" },
-    { chord: "G", color: "pink" },
+    //TODO: COlors?
+    { chord: "A", color: "#ff81d3" },
+    { chord: "B", color: "#39d4bb" },
+    { chord: "C", color: "#dfae45" },
+    { chord: "D", color: "#b6b0ff" },
+    { chord: "E", color: "#eeff14" },
+    { chord: "F", color: "#14e7ff" },
+    { chord: "G", color: "#dd7474" },
   ];
   const chordExtras: any = [
     {
@@ -66,7 +84,6 @@ export default function Chords() {
   }, []);
 
   const randomizeChords = () => {
-    // let numberOfChords: number;
     let randomNumberOfChords: Array<number> = [4, 8, 12, 16];
     let theNumber: number =
       randomNumberOfChords[
@@ -77,7 +94,7 @@ export default function Chords() {
     for (var i = 0; i < theNumber; i++) {
       let randomNumber = Math.floor(Math.random() * chordKey.length);
       chordsToAdd.push(
-        chordKey[Math.floor(Math.random() * chordKey.length)].chord
+        chordKey[randomNumber].chord
         // [
         //   {
         //     chord: chordKey[Math.floor(Math.random() * chordKey.length)].chord,
@@ -107,26 +124,49 @@ export default function Chords() {
             ))
           : null} */}
           {chords
-            ? chords.map((oneChord, index: number) => (
-                <div
-                  className={`${chordsStyles.chordBox} ${oneChord}`}
-                  key={index}
-                >
-                  <span className={oneChord}>{oneChord}</span>
+            ? chords.map((oneChord: any, index: number) => (
+                <div className={`chordBox ${oneChord}`} key={index}>
+                  <span>{oneChord}</span>
                 </div>
               ))
             : null}
           <style global jsx>
             {`
+              span {
+                font-size: 36px;
+                color: white;
+              }
               .A {
                 background: $hotpink;
               }
-              .oneChord {
-                background: blue;
-                color: red;
+              .chordBox {
+                width: 100px;
+                height: 50px;
+                display: inline-block;
+                border-radius: 25px;
+                margin: 10px 10px 0px 0px;
               }
-              span {
-                color: pink;
+
+              .A {
+                background: ${hotPink};
+              }
+              .B {
+                background: ${softAqua};
+              }
+              .C {
+                background: ${softGreen};
+              }
+              .D {
+                background: ${hotPurple};
+              }
+              .E {
+                background: ${hotCyan};
+              }
+              .F {
+                background: ${hotOrange};
+              }
+              .G {
+                background: ${hotRed};
               }
             `}
           </style>

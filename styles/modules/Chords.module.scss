@@ -10,32 +10,35 @@
   margin-top: 15px;
   overflow-wrap: anywhere;
 }
-.chordBox {
-  width: 100px;
-  height: 50px;
-  display: inline-block;
-  padding: 25px 0;
-  border-radius: 25px;
-}
-span.A {
-  background: $hotPink;
-}
+// .chordBox {
+//   width: 100px;
+//   height: 50px;
+//   display: inline-block;
+//   padding: 25px 0;
+//   border-radius: 25px;
+// }
+// .chordBox.A {
+//   background: $hotPink;
+// }
+// .B {
+//   background: green;
+// }
 
-.chordBox.B {
-  background: $hotCyan;
-}
-.chordBox.C {
-  background: $hotYellow;
-}
-.chordBox.D {
-  background: $hotPurple;
-}
-.chordBox.E {
-  background: $hotGreen;
-}
-.chordBox.F {
-  background: $softPurple;
-}
-.chordBox.G {
-  background: $darkBlue;
-}
+// .chordBox.B {
+//   background: $hotCyan;
+// }
+// .chordBox.C {
+//   background: $hotYellow;
+// }
+// .chordBox.D {
+//   background: $hotPurple;
+// }
+// .chordBox.E {
+//   background: $hotOrange;
+// }
+// .chordBox.F {
+//   background: $hotAqua;
+// }
+// .chordBox.G {
+//   background: $hotRed;
+// }
