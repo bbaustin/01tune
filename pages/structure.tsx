@@ -12,8 +12,16 @@ export default function Structure() {
     setStructure(randomizeSongStructure());
   }, []);
 
+  const checkForIntro = (songStructure: Array<string>) => {
+    let index = songStructure.indexOf("Intro");
+    for (var i = 1; i < songStructure.length; i++)
+      songStructure = songStructure.filter(function (part) {
+        return part !== "Intro";
+      });
+  };
+
   const randomizeSongStructure = () => {
-    const songStructureParts = ["A", "B", "C", "D", "Intro", "Outro", "Bridge"];
+    const songStructureParts = ["Intro", "A", "B", "C", "D", "Bridge", "Outro"];
     const songStructureAdditions = [
       "Transpose up one whole step",
       "All instruments cut out; if you're using them, only singing, percussion, and optionally, bass, remain",
@@ -31,6 +39,7 @@ export default function Structure() {
         ] + " "
       );
     }
+    checkForIntro(songStructure);
     setStructure(songStructure);
     return songStructure;
     //working but doesn't make sense, haha. ABCs need to be in order. Intro needs to be first. Outro needs to be last.

@@ -171,8 +171,6 @@ export default function Chords() {
             `}
           </style>
         </div>
-
-        {/* <p>{chords}</p> */}
         <TonePlayer tones={chords} />
       </div>
     </Layout>
