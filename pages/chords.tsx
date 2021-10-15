@@ -84,7 +84,7 @@ export default function Chords() {
   }, []);
 
   const randomizeChords = () => {
-    let randomNumberOfChords: Array<number> = [4, 8, 12, 16];
+    let randomNumberOfChords: Array<number> = [4]; //, 8, 12, 16];
     let theNumber: number =
       randomNumberOfChords[
         Math.floor(Math.random() * randomNumberOfChords.length)
@@ -93,15 +93,7 @@ export default function Chords() {
 
     for (var i = 0; i < theNumber; i++) {
       let randomNumber = Math.floor(Math.random() * chordKey.length);
-      chordsToAdd.push(
-        chordKey[randomNumber].chord
-        // [
-        //   {
-        //     chord: chordKey[Math.floor(Math.random() * chordKey.length)].chord,
-        //     color: chordKey[randomNumber].color,
-        //   },
-        // ]
-      );
+      chordsToAdd.push(chordKey[randomNumber].chord);
     }
     setChords(chordsToAdd);
     return chordsToAdd;
@@ -116,13 +108,6 @@ export default function Chords() {
         <button onClick={() => playChords()}>Play next chord</button>
         <button onClick={() => randomizeChords()}>Randomize chords</button>
         <div className="chord-holder">
-          {/* {{ chords }
-            ? { chords }.map((oneChord: string, keyId: number) => (
-              <span key={keyId} style={{ color: oneChord }}>
-                {oneChord}
-              </span>
-            ))
-          : null} */}
           {chords
             ? chords.map((oneChord: any, index: number) => (
                 <div className={`chordBox ${oneChord}`} key={index}>
