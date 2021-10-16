@@ -35,3 +35,20 @@ export const TIME = [
   "7:2",
   "8:0",
 ];
+export const SONG_STRUCTURE_PARTS = [
+  "Intro",
+  "aPart",
+  "anotherPart",
+  "yetAnotherPart",
+  "somePart",
+  "Bridge",
+  "Outro",
+];
+export const SONG_STRUCTURE_ADDITIONS = [
+  "Transpose up one whole step",
+  "All instruments cut out; if you're using them, only singing, percussion, and optionally, bass, remain",
+  "Add a counter-melody with an unexpected instrument, such as flute, French horn, or steel drum",
+  "Consider adding a sample here. Be careful, and avoid cliche",
+  "Add handclaps",
+  "If there are drums, make them go half-time here",
+];

@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import {
+  SONG_STRUCTURE_PARTS,
+  SONG_STRUCTURE_ADDITIONS,
+} from "../lib/constants";
 
 interface StructureState {
-  structure: any;
+  structure: Array<string>;
 }
 
 export default function Structure() {
@@ -12,34 +16,40 @@ export default function Structure() {
     setStructure(randomizeSongStructure());
   }, []);
 
-  const checkForIntro = (songStructure: Array<string>) => {
-    let index = songStructure.indexOf("Intro");
-    for (var i = 1; i < songStructure.length; i++)
-      songStructure = songStructure.filter(function (part) {
-        return part !== "Intro";
-      });
+  const removeIntroIfNotFirst = (structure: Array<string>) => {
+    let newStructureWithoutIntros = [structure[0]];
+    for (var i = 1; i < structure.length; i++) {
+      if (structure[i] !== "Intro ") {
+        //NOTE: Please note the space here. Added in randomizeSongStructure. If you change that, remember to change it here, too.
+        newStructureWithoutIntros.push(structure[i]);
+      }
+    }
+    return newStructureWithoutIntros;
+  };
+
+  const removeOutroIfNotLast = (structure: Array<string>) => {
+    let newStructureWithoutOutros = [];
+    for (var i = 0; i < structure.length - 1; i++) {
+      if (structure[i] !== "Outro ") {
+        //NOTE: Please note the space here. Added in randomizeSongStructure. If you change that, remember to change it here, too.
+        newStructureWithoutOutros.push(structure[i]);
+      }
+    }
+    newStructureWithoutOutros.push(structure[structure.length - 1]);
+    return newStructureWithoutOutros;
   };
 
   const randomizeSongStructure = () => {
-    const songStructureParts = ["Intro", "A", "B", "C", "D", "Bridge", "Outro"];
-    const songStructureAdditions = [
-      "Transpose up one whole step",
-      "All instruments cut out; if you're using them, only singing, percussion, and optionally, bass, remain",
-      "Add a counter-melody with an unexpected instrument, such as flute, French horn, or steel drum",
-      "Consider adding a sample here. Be careful, and avoid cliche",
-      "Add handclaps",
-      "If there are drums, make them go half-time here",
-    ];
     let randomNumberOfParts = Math.floor(Math.random() * 5) + 3;
     let songStructure: any = [];
     for (var i = 0; i < randomNumberOfParts; i++) {
       songStructure.push(
-        songStructureParts[
-          Math.floor(Math.random() * songStructureParts.length)
+        SONG_STRUCTURE_PARTS[
+          Math.floor(Math.random() * SONG_STRUCTURE_PARTS.length)
         ] + " "
       );
     }
-    checkForIntro(songStructure);
+    songStructure = removeIntroIfNotFirst(removeOutroIfNotLast(songStructure));
     setStructure(songStructure);
     return songStructure;
     //working but doesn't make sense, haha. ABCs need to be in order. Intro needs to be first. Outro needs to be last.
