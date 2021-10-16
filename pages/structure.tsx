@@ -4,6 +4,7 @@ import {
   SONG_STRUCTURE_PARTS,
   SONG_STRUCTURE_ADDITIONS,
 } from "../lib/constants";
+import { COLORS } from "../lib/constants";
 
 interface StructureState {
   structure: Array<string>;
@@ -66,8 +67,11 @@ export default function Structure() {
     return structure;
   };
 
+  //TODO: Make Intro Reprise?
+  //TODO: Make Structure Additions
+
   const randomizeSongStructure = () => {
-    let randomNumberOfParts = Math.floor(Math.random() * 5) + 3;
+    let randomNumberOfParts = Math.floor(Math.random() * 5) + 4;
     let songStructure: any = [];
     for (let i = 0; i < randomNumberOfParts; i++) {
       songStructure.push(
@@ -81,16 +85,40 @@ export default function Structure() {
     );
     setStructure(songStructure);
     return songStructure;
-    //working but doesn't make sense, haha. ABCs need to be in order. Intro needs to be first. Outro needs to be last.
   };
 
   return (
     <Layout>
-      <h1>Generate Song Structure</h1>
+      <h1 style={{ marginBottom: "10px" }}>Generate Song Structure</h1>
       <button onClick={() => randomizeSongStructure()}>
         Randomize a song structure
       </button>
-      <div>{structure}</div>
+      <h2 className="structureText">{structure}</h2>
+      <style jsx>
+        {`
+          .structureText {
+            background-color: red;
+
+            background-image: linear-gradient(
+              45deg,
+              ${COLORS.hotAqua},
+              ${COLORS.hotOrange}
+            );
+
+            background-size: 100%;
+            background-repeat: repeat;
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -moz-background-clip: text;
+            -moz-text-fill-color: transparent;
+          }
+        `}
+      </style>
     </Layout>
   );
+  {
+    /* TODO: Randomize gradient, or make each type a different color (like with
+        chords) */
+  }
 }

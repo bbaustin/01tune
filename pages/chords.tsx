@@ -126,10 +126,10 @@ export default function Chords() {
 
   return (
     <Layout>
-      <div className={chordsStyles.chordHolder}>
+      <div className="chordHolder">
         <h1>Generate Chords</h1>
 
-        <div className="chord-holder">
+        <div className="chordHolder">
           {chordTonics
             ? chordTonics.map((chordTonic: any, index: number) => (
                 <div className={`chordBox ${chordTonic}`} key={index}>
@@ -150,15 +150,23 @@ export default function Chords() {
             font-size: 36px;
             color: white;
           }
-          .A {
-            background: $hotpink;
-          }
           .chordBox {
             width: 100px;
             height: 50px;
             display: inline-block;
             border-radius: 25px;
             margin: 10px 10px 0px 0px;
+          }
+          .generateChords {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+          }
+          .chordHolder {
+            margin: 5px 0px 15px 0px;
+            overflow-wrap: anywhere;
+            width: 440px;
           }
 
           .A {

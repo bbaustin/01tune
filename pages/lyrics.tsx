@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import lyricsStyles from "../styles/modules/Lyrics.module.scss";
-
 import axios from "axios";
 
 interface LyricsState {
@@ -27,27 +26,17 @@ export default function Lyrics() {
         `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&explaintext&redirects=1&origin=*&titles=${newString}`
       )
       .then(function (response) {
-        console.log("response");
-        console.log(response);
-        console.log("---");
-
         let pages = response.data.query.pages;
         let wikiID = Object.keys(pages);
-        let textContent = response.data.query.pages[wikiID[0]].extract;
-        console.log("response");
-        console.log(textContent);
-        console.log("---");
+        let textContent = response.data.query.pages[wikiID[0]].extract; // Can log these
         mangleLyrics(textContent);
-        // return textContent;
+        // TODO: Alternative ideas
+        // https://www.npmjs.com/package/markov-strings
+        // https://github.com/maximumdata/markov-generator
       })
       .catch(function (error) {
         console.log(`error: ${error}`);
       });
-    //}
-    // } else {
-    //   setLyrics(["Please", "choose", "a", "theme!"]);
-    //   return "Please choose a theme!";
-    // }
   };
 
   const mangleLyrics = (lyrics: any) => {
@@ -67,12 +56,6 @@ export default function Lyrics() {
       .toLowerCase();
     setLyrics(newLyrics);
   };
-
-  //TODO: This would be better than having the mangle call in the then of getLyrics
-  // const generateLyrics = () => { //need async here
-  //   let lyricsToMangle = getLyrics();
-  //   mangleLyrics(lyricsToMangle);
-  // };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(event.target.value);
