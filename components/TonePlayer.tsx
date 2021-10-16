@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import * as Tone from "tone";
 import { Synth } from "tone";
+import Layout from "../components/Layout";
 
 interface tonePlayerProps {
   fullChords: any;
@@ -17,7 +18,7 @@ export default function TonePlayer(props: any) {
   //   }
   // };
 
-  useEffect(() => {
+  const playChords = () => {
     if (props.fullChords) {
       const synth = new Tone.PolySynth(Tone.Synth).toDestination();
       const time = [
@@ -49,7 +50,14 @@ export default function TonePlayer(props: any) {
       //   synth.triggerAttackRelease(`${props.tones[i]}4`, "1n");
       // }
     }
-  });
+  };
 
-  return null;
+  return (
+    <>
+      <button onClick={() => playChords()}>Play chords ▸</button>
+      <button onClick={() => props.randomizeChords()}>
+        Randomize chords ↺
+      </button>
+    </>
+  );
 }

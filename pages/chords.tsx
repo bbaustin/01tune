@@ -5,13 +5,10 @@ import chordsStyles from "../styles/modules/Chords.module.scss";
 import { COLORS } from "../lib/constants";
 
 interface ChordsState {
-  // chords: Array<string>;
   chordTonics: Array<string>;
   fullChords: Array<string>;
   keyOfSong: string;
 }
-
-// // highlighter colors
 
 export default function Chords() {
   const [chordTonics, setChordTonics] = useState();
@@ -74,7 +71,7 @@ export default function Chords() {
   }, []);
 
   const randomizeChords = () => {
-    let possibleNumberOfChords: Array<number> = [4]; //, 8, 12, 16];
+    let possibleNumberOfChords: Array<number> = [4, 8]; //, 8, 12, 16];
     let numberOfChords: number =
       possibleNumberOfChords[
         Math.floor(Math.random() * possibleNumberOfChords.length)
@@ -86,35 +83,43 @@ export default function Chords() {
       chordTonicsToAdd.push(chordKey[randomNumber].chord);
     }
     setChordTonics(chordTonicsToAdd);
+    createFullChordsFromChordTonic(chordTonicsToAdd);
     return chordTonicsToAdd;
   };
 
-  const createFullChordFromChordTonic = (chordTonic: string) => {
-    let fullChord: Array<string> = [""];
-    switch (chordTonic) {
-      case "A":
-        fullChord = ["A4", "C#4", "E4"];
-        break;
-      case "B":
-        fullChord = ["B4", "D#4", "F#4"];
-        break;
-      case "C":
-        fullChord = ["C4", "E4", "G4"];
-        break;
-      case "D":
-        fullChord = ["D4", "F#4", "A4"];
-        break;
-      case "E":
-        fullChord = ["E4", "G#4", "B4"];
-        break;
-      case "F":
-        fullChord = ["F4", "A4", "C4"];
-        break;
-      case "G":
-        fullChord = ["G4", "D4", "B4"];
-        break;
+  const createFullChordsFromChordTonic = (chordTonics: Array<string>) => {
+    let fullChord: any = [];
+    let fullChords: any = [];
+    if (chordTonics) {
+      for (var i = 0; i < chordTonics.length; i++) {
+        switch (chordTonics[i]) {
+          case "A":
+            fullChord = ["A4", "C#4", "E4"];
+            break;
+          case "B":
+            fullChord = ["B4", "D#4", "F#4"];
+            break;
+          case "C":
+            fullChord = ["C4", "E4", "G4"];
+            break;
+          case "D":
+            fullChord = ["D4", "F#4", "A4"];
+            break;
+          case "E":
+            fullChord = ["E4", "G#4", "B4"];
+            break;
+          case "F":
+            fullChord = ["F4", "A4", "C4"];
+            break;
+          case "G":
+            fullChord = ["G4", "D4", "B4"];
+            break;
+        }
+        fullChords.push(fullChord);
+      }
+      setFullChords(fullChords);
+      return fullChords;
     }
-    return fullChord;
   };
 
   const playChords = () => {};
@@ -123,8 +128,7 @@ export default function Chords() {
     <Layout>
       <div className={chordsStyles.chordHolder}>
         <h1>Generate Chords</h1>
-        <button onClick={() => playChords()}>Play next chord</button>
-        <button onClick={() => randomizeChords()}>Randomize chords</button>
+
         <div className="chord-holder">
           {chordTonics
             ? chordTonics.map((chordTonic: any, index: number) => (
@@ -136,8 +140,8 @@ export default function Chords() {
         </div>
         <TonePlayer
           fullChords={fullChords}
-          createFullChordFromChordTonic={createFullChordFromChordTonic} //Not needed? Just send chords
-          // sendChordsToPlayer={sendChordsToPlayer}
+          createFullChordsFromChordTonic={createFullChordsFromChordTonic} //Not needed? Just send chords
+          randomizeChords={randomizeChords}
         />
       </div>
       <style global jsx>
