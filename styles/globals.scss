@@ -7,7 +7,13 @@ body {
   color: $white;
 }
 button {
+  margin: 10px 10px 20px 10px;
+  border: 0;
+  padding: 10px;
+  font-family: "Roboto Mono", "Source Code Pro", monospace;
+  height: 80px;
   width: 100px;
+  box-shadow: $white -5px 5px;
 }
 a {
   color: inherit;

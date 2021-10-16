@@ -2,40 +2,30 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import TonePlayer from "../components/TonePlayer";
 import chordsStyles from "../styles/modules/Chords.module.scss";
+import { COLORS } from "../lib/constants";
 
 interface ChordsState {
   // chords: Array<string>;
-  chords: any;
+  chordTonics: Array<string>;
+  fullChords: Array<string>;
+  keyOfSong: string;
 }
 
 // // highlighter colors
-const softPink = "#ff81d3";
-const hotPink = "#ff68ca";
-const softPurple = "#b6b0ff";
-const hotPurple = "#c180ff";
-const hotCyan = "#14e7ff";
-const softCyan = "#92dce5";
-const hotAqua = "#39d4bb";
-const softAqua = "#399999";
-const hotGreen = "#48ff14";
-const softGreen = "#2fb863";
-const hotYellow = "#eeff14";
-const hotOrange = "#dfae45";
-const softOrange = "#e9c194";
-const hotRed = "#dd7474";
-const softRed = "#e99999";
 
 export default function Chords() {
-  const [chords, setChords] = useState();
+  const [chordTonics, setChordTonics] = useState();
+  const [fullChords, setFullChords] = useState();
+  const keyOfSong: string = ""; //TODO: Randomize a key, to help determine variable randomness of chords.
   const chordKey: Array<any> = [
-    //TODO: COlors?
-    { chord: "A", color: "#ff81d3" },
-    { chord: "B", color: "#39d4bb" },
-    { chord: "C", color: "#dfae45" },
-    { chord: "D", color: "#b6b0ff" },
-    { chord: "E", color: "#eeff14" },
-    { chord: "F", color: "#14e7ff" },
-    { chord: "G", color: "#dd7474" },
+    //TODO: This can just be strings. Doesn't need to be object. Or, you can apply extras. sharpFlat and modifier(1,2)
+    { chord: "A", sharpFlat: "", modifierOne: "", modifierTwo: "" },
+    { chord: "B", sharpFlat: "", modifierOne: "", modifierTwo: "" },
+    { chord: "C", sharpFlat: "", modifierOne: "", modifierTwo: "" },
+    { chord: "D", sharpFlat: "", modifierOne: "", modifierTwo: "" },
+    { chord: "E", sharpFlat: "", modifierOne: "", modifierTwo: "" },
+    { chord: "F", sharpFlat: "", modifierOne: "", modifierTwo: "" },
+    { chord: "G", sharpFlat: "", modifierOne: "", modifierTwo: "" },
   ];
   const chordExtras: any = [
     {
@@ -80,23 +70,51 @@ export default function Chords() {
     },
   ];
   useEffect(() => {
-    setChords(randomizeChords());
+    setChordTonics(randomizeChords());
   }, []);
 
   const randomizeChords = () => {
-    let randomNumberOfChords: Array<number> = [4]; //, 8, 12, 16];
-    let theNumber: number =
-      randomNumberOfChords[
-        Math.floor(Math.random() * randomNumberOfChords.length)
+    let possibleNumberOfChords: Array<number> = [4]; //, 8, 12, 16];
+    let numberOfChords: number =
+      possibleNumberOfChords[
+        Math.floor(Math.random() * possibleNumberOfChords.length)
       ];
-    let chordsToAdd: any = [];
+    let chordTonicsToAdd: any = [];
 
-    for (var i = 0; i < theNumber; i++) {
+    for (var i = 0; i < numberOfChords; i++) {
       let randomNumber = Math.floor(Math.random() * chordKey.length);
-      chordsToAdd.push(chordKey[randomNumber].chord);
+      chordTonicsToAdd.push(chordKey[randomNumber].chord);
     }
-    setChords(chordsToAdd);
-    return chordsToAdd;
+    setChordTonics(chordTonicsToAdd);
+    return chordTonicsToAdd;
+  };
+
+  const createFullChordFromChordTonic = (chordTonic: string) => {
+    let fullChord: Array<string> = [""];
+    switch (chordTonic) {
+      case "A":
+        fullChord = ["A4", "C#4", "E4"];
+        break;
+      case "B":
+        fullChord = ["B4", "D#4", "F#4"];
+        break;
+      case "C":
+        fullChord = ["C4", "E4", "G4"];
+        break;
+      case "D":
+        fullChord = ["D4", "F#4", "A4"];
+        break;
+      case "E":
+        fullChord = ["E4", "G#4", "B4"];
+        break;
+      case "F":
+        fullChord = ["F4", "A4", "C4"];
+        break;
+      case "G":
+        fullChord = ["G4", "D4", "B4"];
+        break;
+    }
+    return fullChord;
   };
 
   const playChords = () => {};
@@ -108,56 +126,60 @@ export default function Chords() {
         <button onClick={() => playChords()}>Play next chord</button>
         <button onClick={() => randomizeChords()}>Randomize chords</button>
         <div className="chord-holder">
-          {chords
-            ? chords.map((oneChord: any, index: number) => (
-                <div className={`chordBox ${oneChord}`} key={index}>
-                  <span>{oneChord}</span>
+          {chordTonics
+            ? chordTonics.map((chordTonic: any, index: number) => (
+                <div className={`chordBox ${chordTonic}`} key={index}>
+                  <span>{chordTonic}</span>
                 </div>
               ))
             : null}
-          <style global jsx>
-            {`
-              span {
-                font-size: 36px;
-                color: white;
-              }
-              .A {
-                background: $hotpink;
-              }
-              .chordBox {
-                width: 100px;
-                height: 50px;
-                display: inline-block;
-                border-radius: 25px;
-                margin: 10px 10px 0px 0px;
-              }
-
-              .A {
-                background: ${hotPink};
-              }
-              .B {
-                background: ${softAqua};
-              }
-              .C {
-                background: ${softGreen};
-              }
-              .D {
-                background: ${hotPurple};
-              }
-              .E {
-                background: ${hotCyan};
-              }
-              .F {
-                background: ${hotOrange};
-              }
-              .G {
-                background: ${hotRed};
-              }
-            `}
-          </style>
         </div>
-        <TonePlayer tones={chords} />
+        <TonePlayer
+          fullChords={fullChords}
+          createFullChordFromChordTonic={createFullChordFromChordTonic} //Not needed? Just send chords
+          // sendChordsToPlayer={sendChordsToPlayer}
+        />
       </div>
+      <style global jsx>
+        {`
+          span {
+            font-size: 36px;
+            color: white;
+          }
+          .A {
+            background: $hotpink;
+          }
+          .chordBox {
+            width: 100px;
+            height: 50px;
+            display: inline-block;
+            border-radius: 25px;
+            margin: 10px 10px 0px 0px;
+          }
+
+          .A {
+            background: ${COLORS.hotPink};
+          }
+          .B {
+            background: ${COLORS.softAqua};
+          }
+          .C {
+            background: ${COLORS.softGreen};
+          }
+          .D {
+            background: ${COLORS.hotPurple};
+          }
+          .E {
+            background: ${COLORS.hotCyan};
+          }
+          .F {
+            background: ${COLORS.hotOrange};
+          }
+          .G {
+            background: ${COLORS.hotRed};
+          }
+        `}
+      </style>
     </Layout>
   );
 }
