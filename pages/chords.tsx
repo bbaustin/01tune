@@ -67,7 +67,7 @@ export default function Chords() {
     },
   ];
   useEffect(() => {
-    setChordTonics(randomizeChords());
+    setChordTonics(randomizeChords);
   }, []);
 
   const randomizeChords = () => {
@@ -94,25 +94,25 @@ export default function Chords() {
       for (var i = 0; i < chordTonics.length; i++) {
         switch (chordTonics[i]) {
           case "A":
-            fullChord = ["A4", "C#4", "E4"];
+            fullChord = ["A3", "A4", "C#4", "E3"];
             break;
           case "B":
-            fullChord = ["B4", "D#4", "F#4"];
+            fullChord = ["B3", "B4", "D#4", "F#3"];
             break;
           case "C":
-            fullChord = ["C4", "E4", "G4"];
+            fullChord = ["C3", "C4", "E4", "G3"];
             break;
           case "D":
-            fullChord = ["D4", "F#4", "A4"];
+            fullChord = ["D3", "D4", "F#4", "A3"];
             break;
           case "E":
-            fullChord = ["E4", "G#4", "B4"];
+            fullChord = ["E3", "E4", "G#4", "B3"];
             break;
           case "F":
-            fullChord = ["F4", "A4", "C4"];
+            fullChord = ["F3", "F4", "A4", "C3"];
             break;
           case "G":
-            fullChord = ["G4", "D4", "B4"];
+            fullChord = ["G3", "G4", "D4", "B3"];
             break;
         }
         fullChords.push(fullChord);
