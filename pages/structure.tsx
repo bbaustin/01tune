@@ -3,8 +3,8 @@ import Layout from "../components/Layout";
 import {
   SONG_STRUCTURE_PARTS,
   SONG_STRUCTURE_ADDITIONS,
+  COLORS,
 } from "../lib/constants";
-import { COLORS } from "../lib/constants";
 
 interface StructureState {
   structure: Array<string>;
@@ -12,10 +12,25 @@ interface StructureState {
 
 export default function Structure() {
   const [structure, setStructure] = useState([]);
+  const [gradientColors, setGradientColors] = useState([]);
 
   useEffect(() => {
     setStructure(randomizeSongStructure());
   }, []);
+
+  const randomizeGradientColors = () => {
+    const colorChoices: Object = Object.entries(COLORS);
+    let keys = Object.keys(colorChoices);
+    let leftAndRightColors: Array<string> = [
+      colorChoices[keys[createRandomNumber(colorChoices.length)]][1],
+      colorChoices[keys[createRandomNumber(colorChoices.length)]][1],
+    ];
+    if (leftAndRightColors[0] == leftAndRightColors[1]) {
+      leftAndRightColors[1] = "#bbbbbb";
+    }
+    setGradientColors(leftAndRightColors);
+    return leftAndRightColors;
+  };
 
   const removeIntroIfNotFirst = (structure: Array<string>) => {
     let newStructureWithoutIntros = [structure[0]];
@@ -54,8 +69,6 @@ export default function Structure() {
       let counter: number = 0;
       let realParts = ["A ", "B ", "C ", "D "];
       for (let key of orderedParts) {
-        console.log(counter);
-        console.log(key);
         for (let i = 0; i < structure.length; i++) {
           if (structure[i] == key) {
             structure[i] = realParts[counter];
@@ -67,22 +80,26 @@ export default function Structure() {
     return structure;
   };
 
+  const createRandomNumber = (multiplyBy: number) => {
+    return Math.floor(Math.random() * multiplyBy);
+  };
+
   //TODO: Make Intro Reprise?
   //TODO: Make Structure Additions
 
   const randomizeSongStructure = () => {
-    let randomNumberOfParts = Math.floor(Math.random() * 5) + 4;
+    let randomNumberOfParts = createRandomNumber(5) + 4;
     let songStructure: any = [];
     for (let i = 0; i < randomNumberOfParts; i++) {
       songStructure.push(
-        SONG_STRUCTURE_PARTS[
-          Math.floor(Math.random() * SONG_STRUCTURE_PARTS.length)
-        ] + " "
+        SONG_STRUCTURE_PARTS[createRandomNumber(SONG_STRUCTURE_PARTS.length)] +
+          " "
       );
     }
     songStructure = removeIntroIfNotFirst(
       removeOutroIfNotLast(orderParts(songStructure))
     );
+    randomizeGradientColors();
     setStructure(songStructure);
     return songStructure;
   };
@@ -101,8 +118,8 @@ export default function Structure() {
 
             background-image: linear-gradient(
               45deg,
-              ${COLORS.hotAqua},
-              ${COLORS.hotOrange}
+              ${gradientColors[0]},
+              ${gradientColors[1]}
             );
 
             background-size: 100%;

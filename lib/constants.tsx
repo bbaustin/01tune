@@ -42,6 +42,7 @@ export const SONG_STRUCTURE_PARTS = [
   "anotherPart",
   "yetAnotherPart",
   "somePart",
+  "Chorus",
   "Bridge",
   "Outro",
 ];
