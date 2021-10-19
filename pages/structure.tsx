@@ -86,6 +86,7 @@ export default function Structure() {
 
   //TODO: Make Intro Reprise?
   //TODO: Make Structure Additions
+  //TODO: Add percentages to parts. E.g., tone down "Bridge," tone up "ABCD and Chorus." "Intro and Outro" are fine, based on the exisiting limitations on them
 
   const randomizeSongStructure = () => {
     let randomNumberOfParts = createRandomNumber(5) + 4;
