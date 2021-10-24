@@ -135,8 +135,4 @@ export default function Structure() {
       </style>
     </Layout>
   );
-  {
-    /* TODO: Randomize gradient, or make each type a different color (like with
-        chords) */
-  }
 }

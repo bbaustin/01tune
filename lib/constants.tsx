@@ -8,33 +8,127 @@ export const COLORS = {
   softCyan: "#92dce5",
   hotAqua: "#39d4bb",
   softAqua: "#399999",
-  hotGreen: "#48ff14",
-  softGreen: "#2fb863",
+  hotGreen: "#2fb863",
+  softGreen: "#87ab7c",
   hotYellow: "#eeff14",
   hotOrange: "#dfae45",
   softOrange: "#e9c194",
   hotRed: "#dd7474",
   softRed: "#e99999",
 };
+export const NOTES_SHARPS = [
+  {
+    tonic: "A",
+    value: 1,
+  },
+  {
+    tonic: "A#",
+    value: 2,
+  },
+  {
+    tonic: "B",
+    value: 3,
+  },
+  {
+    tonic: "C",
+    value: 4,
+  },
+  {
+    tonic: "C#",
+    value: 5,
+  },
+  {
+    tonic: "D",
+    value: 6,
+  },
+  {
+    tonic: "D#",
+    value: 7,
+  },
+  {
+    tonic: "E",
+    value: 8,
+  },
+  {
+    tonic: "F",
+    value: 9,
+  },
+  {
+    tonic: "F#",
+    value: 10,
+  },
+  {
+    tonic: "G",
+    value: 11,
+  },
+  {
+    tonic: "G#",
+    value: 12,
+  },
+];
+export const NOTES_FLATS = [
+  {
+    tonic: "A",
+    value: 1,
+  },
+  {
+    tonic: "Bb",
+    value: 2,
+  },
+  {
+    tonic: "B",
+    value: 3,
+  },
+  {
+    tonic: "C",
+    value: 4,
+  },
+  {
+    tonic: "Db",
+    value: 5,
+  },
+  {
+    tonic: "D",
+    value: 6,
+  },
+  {
+    tonic: "Eb",
+    value: 7,
+  },
+  {
+    tonic: "E",
+    value: 8,
+  },
+  {
+    tonic: "F",
+    value: 9,
+  },
+  {
+    tonic: "Gb",
+    value: 10,
+  },
+  {
+    tonic: "G",
+    value: 11,
+  },
+  {
+    tonic: "Ab",
+    value: 12,
+  },
+];
 export const TIME = [
   "0",
   "0:1",
   "0:2",
-  "1:0",
+  "0:3",
+  "1:1",
   "1:2",
-  "2:0",
+  "1:3",
+  "1:4",
+  "2:1",
   "2:2",
-  "3:0",
-  "3:2",
-  "4:0",
-  "4:2",
-  "5:0",
-  "5:2",
-  "6:0",
-  "6:2",
-  "7:0",
-  "7:2",
-  "8:0",
+  "2:3",
+  "2:4",
 ];
 export const SONG_STRUCTURE_PARTS = [
   "Intro",
