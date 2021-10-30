@@ -29,10 +29,7 @@ export default function Lyrics() {
         let pages = response.data.query.pages;
         let wikiID = Object.keys(pages);
         let textContent = response.data.query.pages[wikiID[0]].extract; // Can log these
-        mangleLyrics(textContent);
-        // TODO: Alternative ideas
-        // https://www.npmjs.com/package/markov-strings
-        // https://github.com/maximumdata/markov-generator
+        markovMe(textContent);
       })
       .catch(function (error) {
         console.log(`error: ${error}`);
@@ -55,6 +52,41 @@ export default function Lyrics() {
       .replace(/\s{2,}/g, " ")
       .toLowerCase();
     setLyrics(newLyrics);
+  };
+
+  const markovMe = (data) => {
+    const markovChain = {};
+    const textArr = data.split(" ");
+    for (let i = 0; i < textArr.length; i++) {
+      let word = textArr[i].toLowerCase().replace(/[\W_]/, "");
+      if (!markovChain[word]) {
+        markovChain[word] = [];
+      }
+      if (textArr[i + 1]) {
+        markovChain[word].push(
+          textArr[i + 1].toLowerCase().replace(/[\W_]/, "")
+        );
+      }
+    }
+    const words = Object.keys(markovChain);
+    let word = words[Math.floor(Math.random() * words.length)];
+    let result = "";
+    //https://medium.com/@alexkrameris/markov-chain-implementation-in-javascript-a698f371d66f
+    for (let i = 0; i < words.length; i++) {
+      result += word + " ";
+      let newWord =
+        markovChain[word][Math.floor(Math.random() * markovChain[word].length)];
+      word = newWord;
+      if (!word || !markovChain.hasOwnProperty(word))
+        word = words[Math.floor(Math.random() * words.length)];
+    }
+    console.log(result);
+    let finalResultArray = result.split(" ");
+    let finalResult = "";
+    for (var i = 0; i < 50; i++) {
+      finalResult += ` ${finalResultArray[i]}`;
+    }
+    setLyrics(finalResult);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
