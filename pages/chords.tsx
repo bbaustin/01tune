@@ -14,18 +14,18 @@ export default function Chords() {
   const [fullChords, setFullChords] = useState();
   const keyOfSong: string = ""; //TODO: Randomize a key, to help determine variable randomness of chords.
   const chordKey: Array<any> = [
-    { chord: "A", safeName: "A", modifierOne: "", modifierTwo: "" },
-    { chord: "A#", safeName: "Asharp", modifierOne: "", modifierTwo: "" },
-    { chord: "B", safeName: "B", modifierOne: "", modifierTwo: "" },
-    { chord: "C", safeName: "C", modifierOne: "", modifierTwo: "" },
-    { chord: "C#", safeName: "Csharp", modifierOne: "", modifierTwo: "" },
-    { chord: "D", safeName: "D", modifierOne: "", modifierTwo: "" },
-    { chord: "D#", safeName: "Dsharp", modifierOne: "", modifierTwo: "" },
-    { chord: "E", safeName: "E", modifierOne: "", modifierTwo: "" },
-    { chord: "F", safeName: "F", modifierOne: "", modifierTwo: "" },
-    { chord: "F#", safeName: "Fsharp", modifierOne: "", modifierTwo: "" },
-    { chord: "G", safeName: "G", modifierOne: "", modifierTwo: "" },
-    { chord: "G#", safeName: "Gsharp", modifierOne: "", modifierTwo: "" },
+    { chord: "A", safeName: "A", modifierOne: "", modifierTwo: "", placement: 0 },
+    { chord: "A#", safeName: "Asharp", modifierOne: "", modifierTwo: "", placement: 1 },
+    { chord: "B", safeName: "B", modifierOne: "", modifierTwo: "", placement: 2 },
+    { chord: "C", safeName: "C", modifierOne: "", modifierTwo: "", placement: 3 },
+    { chord: "C#", safeName: "Csharp", modifierOne: "", modifierTwo: "", placement: 4 },
+    { chord: "D", safeName: "D", modifierOne: "", modifierTwo: "", placement: 5 },
+    { chord: "D#", safeName: "Dsharp", modifierOne: "", modifierTwo: "", placement: 6 },
+    { chord: "E", safeName: "E", modifierOne: "", modifierTwo: "", placement: 7 },
+    { chord: "F", safeName: "F", modifierOne: "", modifierTwo: "", placement: 8 },
+    { chord: "F#", safeName: "Fsharp", modifierOne: "", modifierTwo: "", placement: 9 },
+    { chord: "G", safeName: "G", modifierOne: "", modifierTwo: "", placement: 10 },
+    { chord: "G#", safeName: "Gsharp", modifierOne: "", modifierTwo: "", placement: 11 },
   ];
   const chordExtras: any = [
     {
@@ -78,6 +78,7 @@ export default function Chords() {
       chordTonicsToAdd.push({
         chordTonic: chordKey[randomNumber].chord,
         safeName: chordKey[randomNumber].safeName,
+        placement: chordKey[randomNumber].placement
       });
     }
     setChordTonics(chordTonicsToAdd);
@@ -86,54 +87,26 @@ export default function Chords() {
   };
 
   const createFullChordsFromChordTonic = (chordTonics: any) => {
-    let fullChord: any = [];
     let fullChords: any = [];
     if (chordTonics) {
       for (var i = 0; i < chordTonics.length; i++) {
-        switch (chordTonics[i].chordTonic) {
-          case "A":
-            fullChord = ["A3", "A4", "C#4", "E3"];
-            break;
-          case "A#":
-            fullChord = ["A#3", "A#4", "D4", "F3"];
-            break;
-          case "B":
-            fullChord = ["B3", "B4", "D#4", "F#3"];
-            break;
-          case "C":
-            fullChord = ["C3", "C4", "E4", "G3"];
-            break;
-          case "C#":
-            fullChord = ["C#3", "C#4", "F4", "G#3"];
-            break;
-          case "D":
-            fullChord = ["D3", "D4", "F#4", "A3"];
-            break;
-          case "D#":
-            fullChord = ["D#3", "D#4", "G4", "A#3"];
-            break;
-          case "E":
-            fullChord = ["E3", "E4", "G#4", "B3"];
-            break;
-          case "F":
-            fullChord = ["F3", "F4", "A4", "C3"];
-            break;
-          case "F#":
-            fullChord = ["F#3", "F#4", "A#4", "C#3"];
-            break;
-          case "G":
-            fullChord = ["G3", "G4", "D4", "B3"];
-            break;
-          case "G#":
-            fullChord = ["G#3", "G#4", "D#4", "C3"];
-            break;
-        }
+        let fullChord: any = [];
+        let tonic = chordTonics[i].placement;
+        let third = loopBackToZero(chordTonics[i].placement + 4);
+        let fifth = loopBackToZero(chordTonics[i].placement + 7);
+        fullChord.push(`${chordKey[tonic].chord}3`, `${chordKey[tonic].chord}4`, `${chordKey[third].chord}4`, `${chordKey[fifth].chord}4`);
         fullChords.push(fullChord);
       }
-      setFullChords(fullChords);
-      return fullChords;
     }
+    setFullChords(fullChords);
+    return fullChords;
   };
+
+  const loopBackToZero = (placement: number) => {
+    if (placement > 11) 
+      {return placement - 12}
+    return placement;
+  }
 
   return (
     <Layout>
@@ -151,7 +124,6 @@ export default function Chords() {
         <TonePlayer
           chordTonics={chordTonics}
           fullChords={fullChords}
-          createFullChordsFromChordTonic={createFullChordsFromChordTonic} //Not needed? Just send chords
           randomizeChords={randomizeChords}
         />
       </div>
