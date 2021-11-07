@@ -12,20 +12,21 @@ interface ChordsState {
 export default function Chords() {
   const [chordTonics, setChordTonics] = useState();
   const [fullChords, setFullChords] = useState();
+  const [chordTypes, setChordTypes] = useState();
   const keyOfSong: string = ""; //TODO: Randomize a key, to help determine variable randomness of chords.
   const chordKey: Array<any> = [
-    { chord: "A", safeName: "A", modifierOne: "", modifierTwo: "", placement: 0 },
-    { chord: "A#", safeName: "Asharp", modifierOne: "", modifierTwo: "", placement: 1 },
-    { chord: "B", safeName: "B", modifierOne: "", modifierTwo: "", placement: 2 },
-    { chord: "C", safeName: "C", modifierOne: "", modifierTwo: "", placement: 3 },
-    { chord: "C#", safeName: "Csharp", modifierOne: "", modifierTwo: "", placement: 4 },
-    { chord: "D", safeName: "D", modifierOne: "", modifierTwo: "", placement: 5 },
-    { chord: "D#", safeName: "Dsharp", modifierOne: "", modifierTwo: "", placement: 6 },
-    { chord: "E", safeName: "E", modifierOne: "", modifierTwo: "", placement: 7 },
-    { chord: "F", safeName: "F", modifierOne: "", modifierTwo: "", placement: 8 },
-    { chord: "F#", safeName: "Fsharp", modifierOne: "", modifierTwo: "", placement: 9 },
-    { chord: "G", safeName: "G", modifierOne: "", modifierTwo: "", placement: 10 },
-    { chord: "G#", safeName: "Gsharp", modifierOne: "", modifierTwo: "", placement: 11 },
+    { chord: "A", safeName: "A", placement: 0 },
+    { chord: "A#", safeName: "Asharp", placement: 1 },
+    { chord: "B", safeName: "B", placement: 2 },
+    { chord: "C", safeName: "C", placement: 3 },
+    { chord: "C#", safeName: "Csharp", placement: 4 },
+    { chord: "D", safeName: "D", placement: 5 },
+    { chord: "D#", safeName: "Dsharp", placement: 6 },
+    { chord: "E", safeName: "E", placement: 7 },
+    { chord: "F", safeName: "F", placement: 8 },
+    { chord: "F#", safeName: "Fsharp", placement: 9 },
+    { chord: "G", safeName: "G", placement: 10 },
+    { chord: "G#", safeName: "Gsharp", placement: 11 },
   ];
   const chordExtras: any = [
     {
@@ -78,7 +79,7 @@ export default function Chords() {
       chordTonicsToAdd.push({
         chordTonic: chordKey[randomNumber].chord,
         safeName: chordKey[randomNumber].safeName,
-        placement: chordKey[randomNumber].placement
+        placement: chordKey[randomNumber].placement,
       });
     }
     setChordTonics(chordTonicsToAdd);
@@ -86,27 +87,56 @@ export default function Chords() {
     return chordTonicsToAdd;
   };
 
+  const determineChordType = () => {
+    let randomNumber = Math.floor(Math.random() * 10);
+    let chordType = "";
+    if (randomNumber % 3 == 0) {
+      chordType += "m";
+    }
+    // TODO: more here... 7, 6, aug, dim, etc.
+    return chordType;
+  };
+
   const createFullChordsFromChordTonic = (chordTonics: any) => {
     let fullChords: any = [];
+    let allChordTypes: any = [];
     if (chordTonics) {
       for (var i = 0; i < chordTonics.length; i++) {
+        let chordType = determineChordType();
+        allChordTypes.push(chordType);
         let fullChord: any = [];
         let tonic = chordTonics[i].placement;
-        let third = loopBackToZero(chordTonics[i].placement + 4);
+        let third;
+        if (chordType == "m") {
+          third = loopBackToZero(chordTonics[i].placement + 3);
+        } else {
+          third = loopBackToZero(chordTonics[i].placement + 4);
+        }
         let fifth = loopBackToZero(chordTonics[i].placement + 7);
-        fullChord.push(`${chordKey[tonic].chord}3`, `${chordKey[tonic].chord}4`, `${chordKey[third].chord}4`, `${chordKey[fifth].chord}4`);
+        fullChord.push(
+          `${chordKey[tonic].chord}3`,
+          `${chordKey[tonic].chord}4`,
+          `${chordKey[third].chord}4`,
+          `${chordKey[fifth].chord}4`
+        );
         fullChords.push(fullChord);
       }
     }
+    setChordTypes(allChordTypes);
     setFullChords(fullChords);
     return fullChords;
   };
 
+  /*
+    Since A=0 and G#=11, we need to "loop back to zero" 
+    to make sure we're playing the right notes.
+  */
   const loopBackToZero = (placement: number) => {
-    if (placement > 11) 
-      {return placement - 12}
+    if (placement > 11) {
+      return placement - 12;
+    }
     return placement;
-  }
+  };
 
   return (
     <Layout>
@@ -117,15 +147,17 @@ export default function Chords() {
             ? chordTonics.map((chordTonic: any, index: number) => (
                 <div className={`chordBox ${chordTonic.safeName}`} key={index}>
                   <span>{chordTonic.chordTonic}</span>
+                  <span>{chordTypes[index]}</span>
                 </div>
               ))
             : null}
+
+          <TonePlayer
+            chordTonics={chordTonics}
+            fullChords={fullChords}
+            randomizeChords={randomizeChords}
+          />
         </div>
-        <TonePlayer
-          chordTonics={chordTonics}
-          fullChords={fullChords}
-          randomizeChords={randomizeChords}
-        />
       </div>
       <style global jsx>
         {`
