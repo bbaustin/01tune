@@ -28,6 +28,7 @@ export default function Chords() {
     { chord: "G", safeName: "G", placement: 10 },
     { chord: "G#", safeName: "Gsharp", placement: 11 },
   ];
+  //TODO: After other-chord-types branch, you can delete this.
   const chordExtras: any = [
     {
       type: "",
@@ -73,7 +74,6 @@ export default function Chords() {
         Math.floor(Math.random() * possibleNumberOfChords.length)
       ];
     let chordTonicsToAdd: any = [];
-
     for (var i = 0; i < numberOfChords; i++) {
       let randomNumber = Math.floor(Math.random() * chordKey.length);
       chordTonicsToAdd.push({
@@ -87,11 +87,18 @@ export default function Chords() {
     return chordTonicsToAdd;
   };
 
+  /*
+    Generates a random number up to 100
+    Using this as a percentage, it will assign a chord type
+    Chord type notes are then determined in createFullChordsFromChordTonic. 
+  */
   const determineChordType = () => {
-    let randomNumber = Math.floor(Math.random() * 10);
+    let randomNumber = Math.floor(Math.random() * 100);
     let chordType = "";
-    if (randomNumber % 3 == 0) {
+    if (randomNumber < 33) {
       chordType += "m";
+    } else if (randomNumber > 33 && randomNumber < 47) {
+      chordType += "7";
     }
     // TODO: more here... 7, 6, aug, dim, etc.
     return chordType;
@@ -105,20 +112,27 @@ export default function Chords() {
         let chordType = determineChordType();
         allChordTypes.push(chordType);
         let fullChord: any = [];
-        let tonic = chordTonics[i].placement;
-        let third;
+        let tonic: number = chordTonics[i].placement;
+        let third: number;
+        let final: number | undefined = undefined;
         if (chordType == "m") {
-          third = loopBackToZero(chordTonics[i].placement + 3);
+          third = goBackToKeyOfA(chordTonics[i].placement + 3);
         } else {
-          third = loopBackToZero(chordTonics[i].placement + 4);
+          third = goBackToKeyOfA(chordTonics[i].placement + 4);
         }
-        let fifth = loopBackToZero(chordTonics[i].placement + 7);
+        let fifth = goBackToKeyOfA(chordTonics[i].placement + 7);
+        if (chordType == "7") {
+          final = goBackToKeyOfA(chordTonics[i].placement + 10);
+        }
         fullChord.push(
           `${chordKey[tonic].chord}3`,
           `${chordKey[tonic].chord}4`,
           `${chordKey[third].chord}4`,
           `${chordKey[fifth].chord}4`
         );
+        if (final) {
+          fullChord.push(`${chordKey[final].chord}4`);
+        }
         fullChords.push(fullChord);
       }
     }
@@ -128,10 +142,10 @@ export default function Chords() {
   };
 
   /*
-    Since A=0 and G#=11, we need to "loop back to zero" 
-    to make sure we're playing the right notes.
+    Since A=0 and G#=11, we need to go back to zero 
+    to return to key of A and start counting up again.
   */
-  const loopBackToZero = (placement: number) => {
+  const goBackToKeyOfA = (placement: number) => {
     if (placement > 11) {
       return placement - 12;
     }
