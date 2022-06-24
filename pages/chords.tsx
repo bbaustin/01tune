@@ -1,91 +1,92 @@
-import React, { useEffect, useState } from "react";
-import Layout from "../components/Layout";
-import TonePlayer from "../components/TonePlayer";
-import { COLORS } from "../lib/constants";
+// @ts-nocheck
+import React, { useEffect, useState } from 'react'
+import Layout from '../components/Layout'
+import TonePlayer from '../components/TonePlayer'
+import { COLORS } from '../lib/constants'
 
 interface ChordsState {
-  chordTonics: Array<string>;
-  fullChords: Array<string>;
-  keyOfSong: string;
+  chordTonics: Array<string>
+  fullChords: Array<string>
+  keyOfSong: string
 }
 
 export default function Chords() {
-  const [chordTonics, setChordTonics] = useState();
-  const [fullChords, setFullChords] = useState();
-  const [chordTypes, setChordTypes] = useState();
-  const keyOfSong: string = ""; //TODO: Randomize a key, to help determine variable randomness of chords.
+  const [chordTonics, setChordTonics] = useState()
+  const [fullChords, setFullChords] = useState()
+  const [chordTypes, setChordTypes] = useState()
+  const keyOfSong: string = '' //TODO: Randomize a key, to help determine variable randomness of chords.
   const chordKey: Array<any> = [
-    { chord: "A", safeName: "A", placement: 0 },
-    { chord: "A#", safeName: "Asharp", placement: 1 },
-    { chord: "B", safeName: "B", placement: 2 },
-    { chord: "C", safeName: "C", placement: 3 },
-    { chord: "C#", safeName: "Csharp", placement: 4 },
-    { chord: "D", safeName: "D", placement: 5 },
-    { chord: "D#", safeName: "Dsharp", placement: 6 },
-    { chord: "E", safeName: "E", placement: 7 },
-    { chord: "F", safeName: "F", placement: 8 },
-    { chord: "F#", safeName: "Fsharp", placement: 9 },
-    { chord: "G", safeName: "G", placement: 10 },
-    { chord: "G#", safeName: "Gsharp", placement: 11 },
-  ];
+    { chord: 'A', safeName: 'A', placement: 0 },
+    { chord: 'A#', safeName: 'Asharp', placement: 1 },
+    { chord: 'B', safeName: 'B', placement: 2 },
+    { chord: 'C', safeName: 'C', placement: 3 },
+    { chord: 'C#', safeName: 'Csharp', placement: 4 },
+    { chord: 'D', safeName: 'D', placement: 5 },
+    { chord: 'D#', safeName: 'Dsharp', placement: 6 },
+    { chord: 'E', safeName: 'E', placement: 7 },
+    { chord: 'F', safeName: 'F', placement: 8 },
+    { chord: 'F#', safeName: 'Fsharp', placement: 9 },
+    { chord: 'G', safeName: 'G', placement: 10 },
+    { chord: 'G#', safeName: 'Gsharp', placement: 11 },
+  ]
   //TODO: After other-chord-types branch, you can delete this.
   const chordExtras: any = [
     {
-      type: "",
+      type: '',
       frequency: 10,
     },
     {
-      type: "minor",
+      type: 'minor',
       frequency: 7,
     },
     {
-      type: "7",
+      type: '7',
       frequency: 2,
     },
     {
-      type: "maj7",
+      type: 'maj7',
       frequency: 2,
     },
     {
-      type: "min7",
+      type: 'min7',
       frequency: 2,
     },
     {
-      type: "6",
+      type: '6',
       frequency: 2,
     },
     {
-      type: "dim",
+      type: 'dim',
       frequency: 1,
     },
     {
-      type: "aug",
+      type: 'aug',
       frequency: 1,
     },
-  ];
+  ]
   useEffect(() => {
-    setChordTonics(randomizeChords);
-  }, []);
+    setChordTonics(randomizeChords)
+  }, [])
 
   const randomizeChords = () => {
-    let possibleNumberOfChords: Array<number> = [4, 8]; //, 8, 12, 16];
+    let possibleNumberOfChords: Array<number> = [4, 8] //, 8, 12, 16];
     let numberOfChords: number =
       possibleNumberOfChords[
         Math.floor(Math.random() * possibleNumberOfChords.length)
-      ];
-    let chordTonicsToAdd: any = [];
+      ]
+    let chordTonicsToAdd: any = []
     for (var i = 0; i < numberOfChords; i++) {
-      let randomNumber = Math.floor(Math.random() * chordKey.length);
+      let randomNumber = Math.floor(Math.random() * chordKey.length)
       chordTonicsToAdd.push({
         chordTonic: chordKey[randomNumber].chord,
         safeName: chordKey[randomNumber].safeName,
         placement: chordKey[randomNumber].placement,
-      });
+      })
     }
-    setChordTonics(chordTonicsToAdd);
-    createFullChordsFromChordTonic(chordTonicsToAdd);
-    return chordTonicsToAdd;
-  };
+    setChordTonics(chordTonicsToAdd)
+    createFullChordsFromChordTonic(chordTonicsToAdd)
+    return chordTonicsToAdd
+  }
 
   /*
     Generates a random number up to 100
@@ -93,53 +94,53 @@ export default function Chords() {
     Chord type notes are then determined in createFullChordsFromChordTonic. 
   */
   const determineChordType = () => {
-    let randomNumber = Math.floor(Math.random() * 100);
-    let chordType = "";
+    let randomNumber = Math.floor(Math.random() * 100)
+    let chordType = ''
     if (randomNumber < 33) {
-      chordType += "m";
+      chordType += 'm'
     } else if (randomNumber > 33 && randomNumber < 47) {
-      chordType += "7";
+      chordType += '7'
     }
     // TODO: more here... 7, 6, aug, dim, etc.
-    return chordType;
-  };
+    return chordType
+  }
 
   const createFullChordsFromChordTonic = (chordTonics: any) => {
-    let fullChords: any = [];
-    let allChordTypes: any = [];
+    let fullChords: any = []
+    let allChordTypes: any = []
     if (chordTonics) {
       for (var i = 0; i < chordTonics.length; i++) {
-        let chordType = determineChordType();
-        allChordTypes.push(chordType);
-        let fullChord: any = [];
-        let tonic: number = chordTonics[i].placement;
-        let third: number;
-        let final: number | undefined = undefined;
-        if (chordType == "m") {
-          third = goBackToKeyOfA(chordTonics[i].placement + 3);
+        let chordType = determineChordType()
+        allChordTypes.push(chordType)
+        let fullChord: any = []
+        let tonic: number = chordTonics[i].placement
+        let third: number
+        let final: number | undefined = undefined
+        if (chordType == 'm') {
+          third = goBackToKeyOfA(chordTonics[i].placement + 3)
         } else {
-          third = goBackToKeyOfA(chordTonics[i].placement + 4);
+          third = goBackToKeyOfA(chordTonics[i].placement + 4)
         }
-        let fifth = goBackToKeyOfA(chordTonics[i].placement + 7);
-        if (chordType == "7") {
-          final = goBackToKeyOfA(chordTonics[i].placement + 10);
+        let fifth = goBackToKeyOfA(chordTonics[i].placement + 7)
+        if (chordType == '7') {
+          final = goBackToKeyOfA(chordTonics[i].placement + 10)
         }
         fullChord.push(
           `${chordKey[tonic].chord}3`,
           `${chordKey[tonic].chord}4`,
           `${chordKey[third].chord}4`,
           `${chordKey[fifth].chord}4`
-        );
+        )
         if (final) {
-          fullChord.push(`${chordKey[final].chord}4`);
+          fullChord.push(`${chordKey[final].chord}4`)
         }
-        fullChords.push(fullChord);
+        fullChords.push(fullChord)
       }
     }
-    setChordTypes(allChordTypes);
-    setFullChords(fullChords);
-    return fullChords;
-  };
+    setChordTypes(allChordTypes)
+    setFullChords(fullChords)
+    return fullChords
+  }
 
   /*
     Since A=0 and G#=11, we need to go back to zero 
@@ -147,16 +148,16 @@ export default function Chords() {
   */
   const goBackToKeyOfA = (placement: number) => {
     if (placement > 11) {
-      return placement - 12;
+      return placement - 12
     }
-    return placement;
-  };
+    return placement
+  }
 
   return (
     <Layout>
-      <div className="chordHolder">
+      <div className='chordHolder'>
         <h1>Generate Chords</h1>
-        <div className="chordHolder">
+        <div className='chordHolder'>
           {chordTonics
             ? chordTonics.map((chordTonic: any, index: number) => (
                 <div className={`chordBox ${chordTonic.safeName}`} key={index}>
@@ -165,7 +166,6 @@ export default function Chords() {
                 </div>
               ))
             : null}
-
           <TonePlayer
             chordTonics={chordTonics}
             fullChords={fullChords}
@@ -237,5 +237,5 @@ export default function Chords() {
         `}
       </style>
     </Layout>
-  );
+  )
 }

@@ -1,117 +1,118 @@
-import React, { useEffect, useState } from "react";
-import Layout from "../components/Layout";
+// @ts-nocheck
+import React, { useEffect, useState } from 'react'
+import Layout from '../components/Layout'
 import {
   SONG_STRUCTURE_PARTS,
   SONG_STRUCTURE_ADDITIONS,
   COLORS,
-} from "../lib/constants";
+} from '../lib/constants'
 
 interface StructureState {
-  structure: Array<string>;
+  structure: Array<string>
 }
 
 export default function Structure() {
-  const [structure, setStructure] = useState([]);
-  const [gradientColors, setGradientColors] = useState([]);
+  const [structure, setStructure] = useState([])
+  const [gradientColors, setGradientColors] = useState([])
 
   useEffect(() => {
-    setStructure(randomizeSongStructure());
-  }, []);
+    setStructure(randomizeSongStructure())
+  }, [])
 
   const randomizeGradientColors = () => {
-    const colorChoices: Object = Object.entries(COLORS);
-    let keys = Object.keys(colorChoices);
+    const colorChoices: Object = Object.entries(COLORS)
+    let keys = Object.keys(colorChoices)
     let leftAndRightColors: Array<string> = [
       colorChoices[keys[createRandomNumber(colorChoices.length)]][1],
       colorChoices[keys[createRandomNumber(colorChoices.length)]][1],
-    ];
+    ]
     if (leftAndRightColors[0] == leftAndRightColors[1]) {
-      leftAndRightColors[1] = "#bbbbbb";
+      leftAndRightColors[1] = '#bbbbbb'
     }
-    setGradientColors(leftAndRightColors);
-    return leftAndRightColors;
-  };
+    setGradientColors(leftAndRightColors)
+    return leftAndRightColors
+  }
 
   const removeIntroIfNotFirst = (structure: Array<string>) => {
-    let newStructureWithoutIntros = [structure[0]];
+    let newStructureWithoutIntros = [structure[0]]
     for (let i = 1; i < structure.length; i++) {
-      if (structure[i] !== "Intro ") {
+      if (structure[i] !== 'Intro ') {
         //NOTE: Please note the space here. Added in randomizeSongStructure. If you change that, remember to change it here, too.
-        newStructureWithoutIntros.push(structure[i]);
+        newStructureWithoutIntros.push(structure[i])
       }
     }
-    return newStructureWithoutIntros;
-  };
+    return newStructureWithoutIntros
+  }
 
   const removeOutroIfNotLast = (structure: Array<string>) => {
-    let newStructureWithoutOutros = [];
+    let newStructureWithoutOutros = []
     for (let i = 0; i < structure.length - 1; i++) {
-      if (structure[i] !== "Outro ") {
+      if (structure[i] !== 'Outro ') {
         //NOTE: Please note the space here. Added in randomizeSongStructure. If you change that, remember to change it here, too.
-        newStructureWithoutOutros.push(structure[i]);
+        newStructureWithoutOutros.push(structure[i])
       }
     }
-    newStructureWithoutOutros.push(structure[structure.length - 1]);
-    return newStructureWithoutOutros;
-  };
+    newStructureWithoutOutros.push(structure[structure.length - 1])
+    return newStructureWithoutOutros
+  }
 
   const orderParts = (structure: Array<string>) => {
-    let orderedParts = new Set();
+    let orderedParts = new Set()
     for (let i = 0; i < structure.length; i++) {
       if (
-        structure[i] == "aPart " ||
-        structure[i] == "anotherPart " ||
-        structure[i] == "yetAnotherPart " ||
-        structure[i] == "somePart "
+        structure[i] == 'aPart ' ||
+        structure[i] == 'anotherPart ' ||
+        structure[i] == 'yetAnotherPart ' ||
+        structure[i] == 'somePart '
       ) {
-        orderedParts.add(structure[i]);
+        orderedParts.add(structure[i])
       }
-      let counter: number = 0;
-      let realParts = ["A ", "B ", "C ", "D "];
+      let counter: number = 0
+      let realParts = ['A ', 'B ', 'C ', 'D ']
       for (let key of orderedParts) {
         for (let i = 0; i < structure.length; i++) {
           if (structure[i] == key) {
-            structure[i] = realParts[counter];
+            structure[i] = realParts[counter]
           }
         }
-        counter++;
+        counter++
       }
     }
-    return structure;
-  };
+    return structure
+  }
 
   const createRandomNumber = (multiplyBy: number) => {
-    return Math.floor(Math.random() * multiplyBy);
-  };
+    return Math.floor(Math.random() * multiplyBy)
+  }
 
   //TODO: Make Intro Reprise?
   //TODO: Make Structure Additions
   //TODO: Add percentages to parts. E.g., tone down "Bridge," tone up "ABCD and Chorus." "Intro and Outro" are fine, based on the exisiting limitations on them
 
   const randomizeSongStructure = () => {
-    let randomNumberOfParts = createRandomNumber(5) + 4;
-    let songStructure: any = [];
+    let randomNumberOfParts = createRandomNumber(5) + 4
+    let songStructure: any = []
     for (let i = 0; i < randomNumberOfParts; i++) {
       songStructure.push(
         SONG_STRUCTURE_PARTS[createRandomNumber(SONG_STRUCTURE_PARTS.length)] +
-          " "
-      );
+          ' '
+      )
     }
     songStructure = removeIntroIfNotFirst(
       removeOutroIfNotLast(orderParts(songStructure))
-    );
-    randomizeGradientColors();
-    setStructure(songStructure);
-    return songStructure;
-  };
+    )
+    randomizeGradientColors()
+    setStructure(songStructure)
+    return songStructure
+  }
 
   return (
     <Layout>
-      <h1 style={{ marginBottom: "10px" }}>Generate Song Structure</h1>
+      <h1 style={{ marginBottom: '10px' }}>Generate Song Structure</h1>
       <button onClick={() => randomizeSongStructure()}>
         Randomize a song structure
       </button>
-      <h2 className="structureText">{structure}</h2>
+      <h2 className='structureText'>{structure}</h2>
       <style jsx>
         {`
           .structureText {
@@ -134,5 +135,5 @@ export default function Structure() {
         `}
       </style>
     </Layout>
-  );
+  )
 }

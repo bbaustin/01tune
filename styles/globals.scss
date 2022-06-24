@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Roboto Mono", "Source Code Pro", monospace;
+  font-family: 'Roboto Mono', 'Source Code Pro', monospace;
   background: $black;
   color: $white;
 }
@@ -10,7 +10,7 @@ button {
   margin: 10px 10px 20px 10px;
   border: 0;
   padding: 10px;
-  font-family: "Roboto Mono", "Source Code Pro", monospace;
+  font-family: 'Roboto Mono', 'Source Code Pro', monospace;
   height: 80px;
   width: 100px;
   box-shadow: $white -5px 5px;
@@ -32,7 +32,7 @@ li {
   list-style: none;
 }
 input {
-  font-family: "Roboto Mono", "Source Code Pro", monospace;
+  font-family: 'Roboto Mono', 'Source Code Pro', monospace;
   width: 300px;
   height: 50px;
   background: $white;
@@ -45,6 +45,17 @@ input {
 }
 input:focus {
   outline: none;
+}
+.info-holder {
+  max-width: 350px;
+  p,
+  small {
+    margin-top: 20px;
+  }
+  small {
+    font-size: 12px;
+    font-style: italic;
+  }
 }
 * {
   box-sizing: border-box;

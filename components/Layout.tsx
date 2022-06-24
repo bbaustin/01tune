@@ -1,34 +1,39 @@
-import Head from "next/head";
-import Link from "next/link";
-import styles from "../styles/modules/Home.module.scss";
+import { ReactNode } from 'react'
+import Head from 'next/head'
+import Link from 'next/link'
+import styles from '../styles/modules/Home.module.scss'
 
-export default function Layout({ children }) {
+interface Props {
+  children?: ReactNode
+}
+
+export default function Layout({ children }: Props) {
   return (
     <>
       <Head>
         <title>01tune</title>
         <meta
-          name="description"
+          name='description'
           content="Songwriting writer's block? Generate your own songs."
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
       <header className={`${styles.container} ${styles.header}`}>
         <h1 className={styles.title}>01tune</h1>
         <nav>
           <ul className={styles.navList}>
             <li>
-              <Link href="/chords">
+              <Link href='/chords'>
                 <a>chords</a>
               </Link>
             </li>
             <li>
-              <Link href="/lyrics">
+              <Link href='/lyrics'>
                 <a>lyrics</a>
               </Link>
             </li>
             <li>
-              <Link href="/structure">
+              <Link href='/structure'>
                 <a>structure</a>
               </Link>
             </li>
@@ -40,5 +45,5 @@ export default function Layout({ children }) {
         <footer className={styles.footer}>(c) 2021</footer>
       </div>
     </>
-  );
+  )
 }
